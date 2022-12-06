@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import {z, ZodError} from 'zod'
 
-const validator =(schema:z.AnyZodObject)=>(req:Request,res:Response,next:NextFunction)=>{
+export const validator =(schema:z.AnyZodObject)=>(req:Request,res:Response,next:NextFunction)=>{
     try{
         schema.parse({
             body:req.body,
