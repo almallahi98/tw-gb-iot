@@ -20,7 +20,7 @@ export const Login = async (req: Request, res: Response) => {
             return res.status(400).json({ msg: messege });
         }
         const jwt_user: IUser = { username: user.username, user_id: user.user_id };
-        const token = jwt.sign(jwt_user, process.env.SECRET_KEY as string);
+        const token = jwt.sign(jwt_user, process.env.SECRET_KEY as string,{expiresIn:'2 days'});
         return res.status(200).json({
             msg: 'welcome back..',
             token: token

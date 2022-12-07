@@ -8,11 +8,15 @@ export const portact=(req:Request,res:Response,next:NextFunction)=>{
     const message="you dont have access"
     try{
         let token=req.headers.authorization;
+        
+        
         if(!token){
             return res.status(401).json({msg:message});
         }
         token=token.split(' ')[1];
+        //console.log(token);
         const user=jwt.verify(token,process.env.SECRET_KEY as string) as IUser;
+        console.log(user);
         res.locals.user=user;
         next();
     }
