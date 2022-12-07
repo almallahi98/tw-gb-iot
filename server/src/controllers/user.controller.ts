@@ -36,6 +36,8 @@ export const Register = async (req: Request, res: Response) => {
     const Data = req.body as RegisterSchemaType;
     try {
         Data.password = await argon2.hash(Data.password);
+        console.log(req.body);
+        
         const user = await dbcontext.user.create({ data: { username: Data.username, password: Data.password } });
         if (!user) {
             return res.status(400).json({ msg: 'error: try again later, try another username..' });
