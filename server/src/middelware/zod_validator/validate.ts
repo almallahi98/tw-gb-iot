@@ -8,13 +8,13 @@ export const validator =(schema:z.AnyZodObject)=>(req:Request,res:Response,next:
             params:req.params,
             query:req.query
         })
+        next()
     }
     catch(err){
         const zodError=err as ZodError;
         return res.status(400).json({msg:{
             error:zodError.errors[0].message,
-            code:zodError.errors[0].code,
-            path:zodError.errors[0].path
+            code:zodError.errors[0].code
         }})
     }
 }
