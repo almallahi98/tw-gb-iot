@@ -1,9 +1,12 @@
 import { Request, response, Response } from "express";
 import { dbcontext } from "../context/context.db";
-import { nodesSchemaTypeId } from "../schema/nodes.schema";
+
+import {IUser} from '../middelware/auth/auth'
+import { nodeSchemaType, nodesSchemaType, nodesSchemaTypeId } from "../schema/node.shema";
+
 
 export const getAllNodes = async (req: Request, res: Response) => {
-    const { user_id } = req.params as nodesSchemaTypeId;
+    const {user_id}= res.locals.user as IUser
     try {
         const nodeList = await dbcontext.nodes.findMany({ where: { user_id } });
         console.log(nodeList.length);
@@ -19,3 +22,39 @@ export const getAllNodes = async (req: Request, res: Response) => {
         })
     }
 } 
+
+export const addNewNode=async(req:Request,res:Response)=>{
+    try{
+        const node= req.body as nodeSchemaType;
+        const user=res.locals.user as IUser;
+        console.log(user);
+        
+        node.user_id= user.user_id;
+        const newNode= await dbcontext.nodes.create({data:node});
+        if(!newNode){
+            return res.status(400).json({messege:"can't add new node.. "});
+        }
+        return res.status(201).json(newNode);
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).json({messge:err});
+    }
+}
+export const updateNode=async(req:Request,res:Response)=>{
+    try{
+        const Data= req.body as nodesSchemaType;
+        const {node_id}=req.params as nodesSchemaTypeId;
+        // this is to make sure that the user cant edit but his devices !!
+        const {user_id} = res.locals.user as IUser;
+        const updated= await dbcontext.nodes.updateMany({where:{node_id,AND:{user_id}},data:Data});
+        if(!updated){
+            return res.status(400).json({message:"update node fail"});
+        }
+        return res.status(201).json({message:"node updated"});
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).json({message:err})
+    }
+}

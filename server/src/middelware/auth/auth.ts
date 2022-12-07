@@ -16,8 +16,9 @@ export const portact=(req:Request,res:Response,next:NextFunction)=>{
         token=token.split(' ')[1];
         //console.log(token);
         const user=jwt.verify(token,process.env.SECRET_KEY as string) as IUser;
-        console.log(user);
+        
         res.locals.user=user;
+        console.log(res.locals.user);
         next();
     }
     catch(err){
