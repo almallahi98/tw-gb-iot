@@ -4,6 +4,8 @@ import { dbcontext } from "../context/context.db";
 import argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken'
 import { IUser } from "../middelware/auth/auth";
+import { RegisterSchemaType } from "../schema/auth.schema";
+
 
 const messege = 'username or password isnt correct..';
 export const Login = async (req: Request, res: Response) => {
@@ -26,6 +28,30 @@ export const Login = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(400).json({msg:messege});
+        return res.status(400).json({ msg: messege });
     }
+}
+
+export const Register = async (req: Request, res: Response) => {
+    const Data = req.body as RegisterSchemaType;
+    try {
+        Data.password = await argon2.hash(Data.password);
+        const user = await dbcontext.user.create({ data: { username: Data.username, password: Data.password } });
+        if (!user) {
+            return res.status(400).json({ msg: 'error: try again later, try another username..' });
+        }
+        await dbcontext.user_is_active.create({ data: { is_active: 'true', user_id: user.user_id } });
+        await dbcontext.user_contact.create({ data: { contact: Data.contact, type: Data.contact_type, user_id: user.user_id } });
+        return res.status(201).json({ msg: 'user is added' });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            msg: {
+                messege: 'insert error',
+                error: err
+            }
+        })
+    }
+
 }

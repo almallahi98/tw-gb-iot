@@ -11,7 +11,7 @@ model data_input {
   id            Int           @id @default(autoincrement())
   input_value   String
   node_id       String
-  date          DateTime      @db.DateTime(0)
+  date          DateTime      @db.DateTime(0) @default(now())
   sensor_id     String
   nodes         nodes         @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_data_input_nodes_1")
   nodes_sensors nodes_sensors @relation(fields: [sensor_id], references: [sensors_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_data_input_nodes_sensors_1")
@@ -21,7 +21,7 @@ model data_input {
 }
 
 model input_target {
-  input_target_id String        @id
+  input_target_id String        @id @default(uuid())
   sensor_id       String
   target_value    String
   nodes_sensors   nodes_sensors @relation(fields: [input_target_id], references: [sensors_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_input_target_nodes_sensors_1")
@@ -30,7 +30,7 @@ model input_target {
 }
 
 model nodes {
-  node_id       String          @id
+  node_id       String          @id @default(uuid())
   node_name     String
   active        nodes_active?
   user_id       String
@@ -42,7 +42,7 @@ model nodes {
 }
 
 model nodes_sensors {
-  sensors_id                                            String        @id
+  sensors_id                                            String        @id @default(uuid())
   node_id                                               String
   sensors_name                                          String
   sensors_type                                          String
@@ -56,7 +56,7 @@ model nodes_sensors {
 }
 
 model sensors_type {
-  sensor_type_id                                         String          @id
+  sensor_type_id                                         String          @id @default(uuid())
   type                                                   String
   start_r                                                String
   end_r                                                  String
@@ -64,7 +64,7 @@ model sensors_type {
 }
 
 model user {
-  user_id        String          @id
+  user_id        String          @id @default(uuid())
   username       String          @unique(map: "username")
   password       String
   nodes          nodes[]
@@ -73,7 +73,7 @@ model user {
 }
 
 model user_contact {
-  contact_id String              @id
+  contact_id String              @id @default(uuid())
   contact    String
   type       String
   active     user_contact_active @default(n)
@@ -84,9 +84,9 @@ model user_contact {
 }
 
 model user_is_active {
-  user_id     String                   @id
+  user_id     String                   @id @default(uuid())
   is_active   user_is_active_is_active @default(true)
-  active_date DateTime?                @db.DateTime(0)
+  active_date DateTime?                @db.DateTime(0) @default(now())
   package     String?
   user        user                     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_is_active_user_1")
 }
