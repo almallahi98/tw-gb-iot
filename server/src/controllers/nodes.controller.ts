@@ -58,3 +58,22 @@ export const updateNode=async(req:Request,res:Response)=>{
         return res.status(400).json({message:err})
     }
 }
+
+export const deleteNode=async(req:Request,res:Response)=>{
+    const {node_id}=req.params as nodesSchemaTypeId;
+    const {user_id} = res.locals.user as IUser;
+    try{
+    const {count} =await dbcontext.nodes.deleteMany({where:{node_id,AND:{user_id}}});
+    if(count<=0){
+        return res.status(400).json({message:"somthing is wrong !! try again later"});
+    }
+    console.log("node is deleted..");
+    return res.status(204);
+    //204 dosnot have a body !!
+    
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).json({message:"cant delete node.."});
+    }
+}

@@ -11,22 +11,13 @@ model data_input {
   id            Int           @id @default(autoincrement())
   input_value   String
   node_id       String
-  date          DateTime      @db.DateTime(0) @default(now())
+  date          DateTime      @default(now()) @db.DateTime(0)
   sensor_id     String
   nodes         nodes         @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_data_input_nodes_1")
   nodes_sensors nodes_sensors @relation(fields: [sensor_id], references: [sensors_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_data_input_nodes_sensors_1")
 
   @@index([node_id], map: "fk_data_input_nodes_1")
   @@index([sensor_id], map: "fk_data_input_nodes_sensors_1")
-}
-
-model input_target {
-  input_target_id String        @id @default(uuid())
-  sensor_id       String
-  target_value    String
-  nodes_sensors   nodes_sensors @relation(fields: [input_target_id], references: [sensors_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_input_target_nodes_sensors_1")
-
-  @@index([sensor_id], map: "fk_input_target_nodes_sensors_1")
 }
 
 model nodes {
@@ -42,25 +33,25 @@ model nodes {
 }
 
 model nodes_sensors {
-  sensors_id                                            String        @id @default(uuid())
-  node_id                                               String
-  sensors_name                                          String
-  sensors_type                                          String
-  data_input                                            data_input[]
-  input_target                                          input_target?
-  nodes                                                 nodes         @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_nodes_1")
-  sensors_type_nodes_sensors_sensors_typeTosensors_type sensors_type  @relation("nodes_sensors_sensors_typeTosensors_type", fields: [sensors_type], references: [sensor_type_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_sensors_type_1")
+  sensors_id           String        @id @default(uuid())
+  node_id              String
+  sensors_target_value String
+  sensors_name         String
+  sensor_type          String?
+  data_input           data_input[]
+  nodes                nodes         @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_nodes_1")
+  sensors_type         sensors_type? @relation(fields: [sensor_type], references: [sensor_type_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_sensors_type_1")
 
   @@index([node_id], map: "fk_nodes_sensors_nodes_1")
-  @@index([sensors_type], map: "fk_nodes_sensors_sensors_type_1")
+  @@index([sensor_type], map: "fk_nodes_sensors_sensors_type_1")
 }
 
 model sensors_type {
-  sensor_type_id                                         String          @id @default(uuid())
-  type                                                   String
-  start_r                                                String
-  end_r                                                  String
-  nodes_sensors_nodes_sensors_sensors_typeTosensors_type nodes_sensors[] @relation("nodes_sensors_sensors_typeTosensors_type")
+  sensor_type_id String          @id @default(uuid())
+  type           String
+  start_r        String
+  end_r          String
+  nodes_sensors  nodes_sensors[]
 }
 
 model user {
@@ -86,7 +77,7 @@ model user_contact {
 model user_is_active {
   user_id     String                   @id @default(uuid())
   is_active   user_is_active_is_active @default(true)
-  active_date DateTime?                @db.DateTime(0) @default(now())
+  active_date DateTime?                @default(now()) @db.DateTime(0)
   package     String?
   user        user                     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_is_active_user_1")
 }
