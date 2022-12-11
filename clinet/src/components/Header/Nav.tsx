@@ -24,6 +24,7 @@ import {
   MoonIcon,
   SunIcon,
 } from '@chakra-ui/icons';
+import LoginModel from '../home/model/LoginModel';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -83,18 +84,7 @@ export default function WithSubnavigation() {
           <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-           
-            _hover={{
-              bg: 'pink.300',
-            }}>
-            Sign In
-          </Button>
+              <LoginModel/>
         </Stack>
       </Flex>
 

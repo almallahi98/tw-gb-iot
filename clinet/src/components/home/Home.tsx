@@ -1,36 +1,29 @@
-import { Box, Flex } from '@chakra-ui/react'
-import React from 'react'
+import { Box } from "@chakra-ui/react";
+import React from "react";
 
 function Home() {
-  return (
-    <> 
-        <Box
-        h={'80vh'}
-        bgImage={"./res/joshua-sortino-LqKhnDzSF-8-unsplash.jpg"}
-        backgroundPosition={'center'}
-        backgroundSize={'cover'}
-        >
+    return (
+        <>
             <Box
-            h={'100%'}
-            pt={'4%'}
-            backdropFilter='auto'
-            backdropBlur={'8px'}>
-                <Flex justifyContent={''}>
-                    <Box w={'100%'}>
-                        1
-                    </Box>
-                    <Box w={'100%'}>
-                        2
-                    </Box>
-                </Flex>
+                bgImage={"./res/joshua-sortino-LqKhnDzSF-8-unsplash.jpg"}
+                backgroundPosition={"center"}
+                backgroundSize={"cover"}
+                >
+                <Box pt={"4%"} h={'60vh'}  backdropFilter="auto" backdropBlur={"8px"}>
+                <Box bgGradient={"linear(to-t, rgba(30,34,37,1) 25%, transparent)"} h={'100%'}/>
+                </Box>
+                
             </Box>
-            
-        </Box>
-        <Box bg={'green'} h={'100px'}>
+            <Box 
+            bg={'rgb(30,34,37)'}
+            h={'100vh'}
+            >
+                z
+            </Box>
 
-        </Box>
-    </>
-  )
+            
+        </>
+    );
 }
 
-export default Home
+export default Home;
