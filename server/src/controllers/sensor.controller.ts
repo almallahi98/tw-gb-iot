@@ -16,19 +16,26 @@ export const getAllNodeSenor=async(req:Request,res:Response)=>{
 
 export const addNodeSensor = async (req: Request, res: Response) => {
     const data = req.body as sensorNodeSchemaType;
-    const insertedSensor = await dbcontext.nodes_sensors.create({
-        data: {
-            node_id: data.node_id,
-            sensors_target_value: data.sensors_target_value,
-            sensors_name: data.sensors_name,
-            sensors_type: data.sensor_type
+    try{
+        const insertedSensor = await dbcontext.nodes_sensors.create({
+            data: {
+                node_id: data.node_id,
+                sensors_target_value: data.sensors_target_value,
+                sensors_name: data.sensors_name,
+                
+                // sensors_type: data.sensor_type
+            }
+        })
+        if (!insertedSensor) {
+            return res.status(400).json({ message: "cant't add new sensor" })
         }
-    })
-    if (!insertedSensor) {
-        return res.status(400).json({ message: "cant't add new sensor" })
+        //const insertedSensorType= await dbcontext.sensors_type.create()
+        return res.status(201).json({ message: "node sensor is added.." })
+    }catch(err){
+        console.log(err);
+        return res.status(400).json({message:"error"})
+        
     }
-    //const insertedSensorType= await dbcontext.sensors_type.create()
-    return res.status(201).json({ message: "node sensor is added.." })
 }
 
 export const updateNodeSensor = async (req: Request, res: Response) => {
