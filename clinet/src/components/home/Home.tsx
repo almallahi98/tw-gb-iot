@@ -5,6 +5,7 @@ import React from "react";
 function Home() {
     return (
         <>
+        
             <Box
                 bgImage={"./res/joshua-sortino-LqKhnDzSF-8-unsplash.jpg"}
                 backgroundPosition={"center"}

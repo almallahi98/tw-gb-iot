@@ -20,7 +20,6 @@ import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
-  ChevronRightIcon,
   MoonIcon,
   SunIcon,
 } from '@chakra-ui/icons';
@@ -150,12 +149,12 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={'block'}
       p={2}
       rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+      _hover={{ bg: useColorModeValue('white.50', 'gray.900') }}>
       <Stack direction={'row'} align={'center'}>
         <Box>
           <Text
             transition={'all .3s ease'}
-            _groupHover={{ color: 'pink.400' }}
+            _groupHover={{ color: 'white.400' }}
             fontWeight={500}>
             {label}
           </Text>
@@ -169,7 +168,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           justify={'flex-end'}
           align={'center'}
           flex={1}>
-          <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+          
         </Flex>
       </Stack>
     </Link>
@@ -248,41 +247,34 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
+    label: 'Home',
+    href:'/'
   },
   {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
+    label: 'About Us',
+    href: '/aboutus',
   },
   {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
+    label: 'Contact Us',
     href: '#',
   },
 ];
+
+
+
+// ,
+//   {
+//     label: 'Find Work',
+//     children: [
+//       {
+//         label: 'Job Board',
+//         subLabel: 'Find your dream design job',
+//         href: '#',
+//       },
+//       {
+//         label: 'Freelance Projects',
+//         subLabel: 'An exclusive list for contract work',
+//         href: '#',
+//       },
+//     ],
+//   },

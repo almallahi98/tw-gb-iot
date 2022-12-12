@@ -4,18 +4,24 @@ import {
     Button,
     useDisclosure,
 } from '@chakra-ui/react'
-import React, {  useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import Login from './Login'
 import Register from './Register'
 
 function LoginModel(props:any) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [IsLoginView, setIsLoginView] = useState(true)
+    const [LoginStat, setLoginStat] = useState('')
+    useEffect(() => {
+        isLogedin()
+    
+    }, [])
+    
     const isLogedin=()=>{
         if(localStorage.getItem('token')==null){
-            return 'Login'
+            setLoginStat('Login')
         }else{
-            return 'Logout'
+            setLoginStat('Logout') 
         }
     }
     return (
@@ -27,9 +33,10 @@ function LoginModel(props:any) {
                     onOpen()
                 }else{
                     localStorage.removeItem('token')
+                    setLoginStat('Login')
                 }
                 
-            }}>{isLogedin()}</Button>
+            }}>{LoginStat}</Button>
             
 
             <Modal
@@ -38,7 +45,7 @@ function LoginModel(props:any) {
             >
                 <ModalOverlay />
                 
-                {(IsLoginView)? <Login onClose={onClose} setIsLoginView={setIsLoginView}/> : <Register onClose={onClose} setIsLoginView={setIsLoginView}/>}
+                {(IsLoginView)? <Login onClose={onClose} setIsLoginView={setIsLoginView} setLoginStat={setLoginStat}/> : <Register onClose={onClose} setIsLoginView={setIsLoginView}/>}
             </Modal>
         </>
     )

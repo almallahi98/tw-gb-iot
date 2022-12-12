@@ -18,9 +18,9 @@ function Login(props: any) {
                 'Content-Type': 'application/json',
             }}).then(res=>{
                 if(res.status===200){
-                    console.log(res.data.msg);
                     localStorage.setItem('token',res.data.token);
                     props.onClose();
+                    props.setLoginStat('Logout')
                 }
             
         });
