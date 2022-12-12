@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Nav from "./components/Header/Nav"
 import Home from "./components/home/Home"
 import AboutUs from "./components/pages/aboutus/AboutUs"
+import DashBord from "./components/pages/dashbord/dash/DashBord"
 
 export const App = () => (
   <ChakraProvider>
@@ -14,6 +15,7 @@ export const App = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs/>}/>
+        <Route path="/dash" element={<DashBord/>}/>
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
