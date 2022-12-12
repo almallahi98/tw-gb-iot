@@ -4,25 +4,35 @@ import {
     Button,
     useDisclosure,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import Login from './Login'
 import Register from './Register'
 
-function LoginModel() {
+function LoginModel(props:any) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
     const [IsLoginView, setIsLoginView] = useState(true)
-
+    const isLogedin=()=>{
+        if(localStorage.getItem('token')==null){
+            return 'Login'
+        }else{
+            return 'Logout'
+        }
+    }
     return (
         <>
-            <Button onClick={onOpen}>Login</Button>
+            <Button onClick={e=>{
+                console.log(e.currentTarget.innerText);
+                
+                if(e.currentTarget.innerText==='Login'){
+                    onOpen()
+                }else{
+                    localStorage.removeItem('token')
+                }
+                
+            }}>{isLogedin()}</Button>
             
 
             <Modal
-                initialFocusRef={initialRef}
-                finalFocusRef={finalRef}
                 isOpen={isOpen}
                 onClose={onClose}
             >

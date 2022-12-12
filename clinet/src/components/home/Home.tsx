@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
+
 import React from "react";
 
 function Home() {
@@ -16,9 +17,32 @@ function Home() {
             </Box>
             <Box 
             bg={'rgb(30,34,37)'}
-            h={'100vh'}
+            h={'50vh'}
             >
-                z
+                <SimpleGrid columns={[3]} pb={2}>
+                    <Box
+                    p={5}
+                    _hover={{
+                        borderBottom:'red 1px',
+                        borderStyle:'solid'
+                    }}
+                    >1</Box>
+                    <Box
+                    p={5}
+                    _hover={{
+                        borderBottom:'red 1px',
+                        borderStyle:'solid',
+                        
+                    }}>2</Box>
+                    <Box
+                    p={5}
+                    _hover={{
+                        borderBottom:'red 1px',
+                        borderStyle:'solid'
+                    }}>3</Box>
+                    
+                </SimpleGrid>
+                
             </Box>
 
             
