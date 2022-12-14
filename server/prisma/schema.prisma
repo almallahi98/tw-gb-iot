@@ -23,7 +23,7 @@ model data_input {
 model nodes {
   node_id       String          @id @default(uuid())
   node_name     String
-  active        nodes_active?
+  active        nodes_active?   @default(true)
   user_id       String
   data_input    data_input[]
   user          user            @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_user_1")
@@ -33,25 +33,19 @@ model nodes {
 }
 
 model nodes_sensors {
-  sensors_id           String        @id @default(uuid())
+  sensors_id           String       @id @default(uuid())
   node_id              String
   sensors_target_value String
   sensors_name         String
   sensor_type          String?
+  type                 String
+  start_r              String
+  end_r                String
   data_input           data_input[]
-  nodes                nodes         @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_nodes_1")
-  sensors_type         sensors_type? @relation(fields: [sensor_type], references: [sensor_type_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_sensors_type_1")
+  nodes                nodes        @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_nodes_1")
 
   @@index([node_id], map: "fk_nodes_sensors_nodes_1")
   @@index([sensor_type], map: "fk_nodes_sensors_sensors_type_1")
-}
-
-model sensors_type {
-  sensor_type_id String          @id @default(uuid())
-  type           String
-  start_r        String
-  end_r          String
-  nodes_sensors  nodes_sensors[]
 }
 
 model user {
@@ -87,12 +81,12 @@ enum user_is_active_is_active {
   false
 }
 
-enum nodes_active {
-  active
-  inactive
-}
-
 enum user_contact_active {
   s
   n
+}
+
+enum nodes_active {
+  true
+  false
 }

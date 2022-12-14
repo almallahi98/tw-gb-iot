@@ -1,7 +1,9 @@
 import { Request, response, Response } from "express";
+import { stat } from "fs";
 import { dbcontext } from "../context/context.db";
 
 import {IUser} from '../middelware/auth/auth'
+import { sensorNodeSchemaType } from "../schema/node.sensores.schema";
 import { nodeSchemaType, nodesSchemaType, nodesSchemaTypeId } from "../schema/node.shema";
 
 
@@ -25,16 +27,31 @@ export const getAllNodes = async (req: Request, res: Response) => {
 
 export const addNewNode=async(req:Request,res:Response)=>{
     try{
-        const node= req.body as nodeSchemaType;
+        const node= req.body
         const user=res.locals.user as IUser;
+        const sensores: sensorNodeSchemaType[]=[...req.body.sensors] 
         console.log(user);
         
-        node.user_id= user.user_id;
-        const newNode= await dbcontext.nodes.create({data:node});
+        
+        const newNode= await dbcontext.nodes.create({data:{
+            node_name:node.node_name,
+            active:node.active,
+            user_id:user.user_id}
+
+        });
         if(!newNode){
             return res.status(400).json({messege:"can't add new node.. "});
         }
-        return res.status(201).json(newNode);
+        const x=sensores.map(((elm:sensorNodeSchemaType)=>{
+            return elm.node_id=newNode.node_id
+        }))
+        console.log(x);
+        
+        const sensoresInserted= await dbcontext.nodes_sensors.createMany({data:sensores})
+        if(!sensoresInserted){
+            return res.status(400).json({message:'error'})
+        }
+        return res.status(201).json({message:'ok'})
     }
     catch(err){
         console.log(err);
@@ -43,11 +60,15 @@ export const addNewNode=async(req:Request,res:Response)=>{
 }
 export const updateNode=async(req:Request,res:Response)=>{
     try{
-        const Data= req.body as nodesSchemaType;
+        const data= req.body as nodesSchemaType;
         const {node_id}=req.params as nodesSchemaTypeId;
         // this is to make sure that the user cant edit but his devices !!
         const {user_id} = res.locals.user as IUser;
-        const updated= await dbcontext.nodes.updateMany({where:{node_id,AND:{user_id}},data:Data});
+        const updated= await dbcontext.nodes.updateMany({where:{node_id,AND:{user_id}},
+            data});
+
+            // active:Data.active,
+            //     node_name:Data.node_name
         if(!updated){
             return res.status(400).json({message:"update node fail"});
         }

@@ -2,12 +2,12 @@ import {z,TypeOf} from 'zod';
 export const sensorNodeSchema=z.object({
     body:z.object({
         node_id:z.string({required_error:"node id is required"}),
-        sensors_name:z.string({required_error:"sensor name is required"}),
         sensors_target_value:z.string({required_error:" sensor target is required"}),
-        sensor_type:z.string({required_error:"seneor type is required"})
-        // sensors_type:z.string({required_error:"sensor type is required"}),
-        // statr_r:z.string({required_error:"sensor stayrt range is required"}),
-        // end_r:z.string({required_error:"sensor end rabge is required"})
+        sensors_name:z.string({required_error:"sensor name is required"}),
+        type:z.enum(['Analog','Digital'],{required_error:'type must me Analog or Digital'}),
+        sensor_type:z.string({required_error:"seneor type is required"}),
+        start_r:z.string({required_error:"sensor stayrt range is required"}),
+        end_r:z.string({required_error:"sensor end rabge is required"})
 
     })
 })

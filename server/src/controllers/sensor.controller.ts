@@ -17,19 +17,9 @@ export const getAllNodeSenor=async(req:Request,res:Response)=>{
 export const addNodeSensor = async (req: Request, res: Response) => {
     const data = req.body as sensorNodeSchemaType;
     try{
-        const insertedSensor = await dbcontext.nodes_sensors.create({
-            data: {
-                node_id: data.node_id,
-                sensors_target_value: data.sensors_target_value,
-                sensors_name: data.sensors_name,
-                
-                // sensors_type: data.sensor_type
-            }
-        })
-        if (!insertedSensor) {
-            return res.status(400).json({ message: "cant't add new sensor" })
-        }
-        //const insertedSensorType= await dbcontext.sensors_type.create()
+        //const sensors = req.body as sensorNodeSchemaType
+        //const addSensors= await dbcontext.nodes_sensors.createMany({data:sensors})
+
         return res.status(201).json({ message: "node sensor is added.." })
     }catch(err){
         console.log(err);
@@ -72,4 +62,21 @@ export const deleteNodeSensor=async(req:Request,res:Response)=>{
         console.log(err);
         return res.status(400).json(err)
     }
+}
+
+
+export const getsensorType=async(req:Request,res:Response)=>{
+    // try{
+    //     const types=await dbcontext.sensors_type.findMany();
+    //     if(!types){
+    //         return res.status(400).json({message:'no sensores is added '})
+    //     }
+    //     return res.status(200).json(types)
+    // }
+    // catch(err){
+    //     console.log(err);
+    //     res.status(500).json({message:'server error'});
+    //     process.exit(1);
+        
+    // }
 }
