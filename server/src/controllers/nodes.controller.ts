@@ -98,3 +98,19 @@ export const deleteNode=async(req:Request,res:Response)=>{
         return res.status(400).json({message:"cant delete node.."});
     }
 }
+export const getNodeById=async(req:Request,res:Response)=>{
+    try{
+        const id= req.params.id;
+        const NodeList=await dbcontext.nodes.findUnique({where:{node_id:id}})
+        if(!NodeList)
+        {
+            return res.status(400).json({message:"no node with the id"});
+        }
+        return res.status(200).json(NodeList);
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).json({message:"no node with the id"})
+        
+    }
+}

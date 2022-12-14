@@ -9,7 +9,7 @@ datasource db {
 
 model data_input {
   id            Int           @id @default(autoincrement())
-  input_value   String
+  input_value   Int
   node_id       String
   date          DateTime      @default(now()) @db.DateTime(0)
   sensor_id     String
@@ -37,7 +37,6 @@ model nodes_sensors {
   node_id              String
   sensors_target_value String
   sensors_name         String
-  sensor_type          String?
   type                 String
   start_r              String
   end_r                String
@@ -45,7 +44,6 @@ model nodes_sensors {
   nodes                nodes        @relation(fields: [node_id], references: [node_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_nodes_sensors_nodes_1")
 
   @@index([node_id], map: "fk_nodes_sensors_nodes_1")
-  @@index([sensor_type], map: "fk_nodes_sensors_sensors_type_1")
 }
 
 model user {

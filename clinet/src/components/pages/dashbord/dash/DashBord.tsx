@@ -62,7 +62,7 @@ function DashBord() {
                                     <Td>
                                         <Button colorScheme='yellow' size='md' data-id={elm.node_id}
                                         onClick={()=>{
-                                            navigate('/edit');
+                                            navigate('/edit/'+elm.node_id);
                                         }}
                                     >
                                         Edit

@@ -31,12 +31,13 @@ export interface sensor {
   start_r?:string,
   end_r?:string,
   sensors_target_value:string,
+  sensors_id?:string
  }
 
  export interface nodeData{
+  node_id?:string,
   node_name: string,
   active: string,
-  
   sensors: sensor[]
  }
 function AddNode() {

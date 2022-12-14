@@ -17,7 +17,7 @@ export const App = () => (
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs/>}/>
         <Route path="/dash" element={<DashBord/>}/>
-        <Route path="/edit" element={<NodeEdit/>}/>
+        <Route path="/edit/:id" element={<NodeEdit/>}/>
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
