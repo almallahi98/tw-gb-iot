@@ -1,10 +1,9 @@
 import { Button, Center, Flex, SimpleGrid, Table, TableContainer, Tbody, Td, Thead, Tr } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import LineChart from "../charts/Charts";
 import {useNavigate} from 'react-router-dom'
 import axios from "axios";
 import AddNode from "./addModel/AddNode";
-import Edit from "./EditModel/Edit";
+
 interface node{
     node_id:string,
     active:string,

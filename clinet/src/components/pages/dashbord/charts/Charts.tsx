@@ -24,7 +24,7 @@ const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'bottom' as const,
+        position: 'top' as const,
       },
       title: {
         display: false,
@@ -53,7 +53,7 @@ const data = {
 
 function LineChart() {
   return (
-    <Line data={data} options={options}/>
+    <Line data={data} options={options} height={'310px'}/>
   );
 }
 

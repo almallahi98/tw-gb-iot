@@ -11,16 +11,7 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Switch,
-    Flex,
-    Table,
-    TableContainer,
-    Thead,
-    Tr,
-    Tbody,
-    Td,
-    Th,
-    Box,
+    
 } from "@chakra-ui/react";
 import React from 'react'
 

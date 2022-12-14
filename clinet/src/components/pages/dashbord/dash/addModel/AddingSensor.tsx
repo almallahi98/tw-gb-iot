@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 
 import React, {useState } from 'react'
-import OtherType from '../OtherType';
+import OtherType from './OtherType';
 import{sensor}from './AddNode';
 
 function AddingSensor(props:any) {
