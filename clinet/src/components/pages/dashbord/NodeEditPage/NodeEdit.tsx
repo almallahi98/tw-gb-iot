@@ -1,15 +1,14 @@
-import { Box, Button, Center, Flex, FormControl, FormLabel, Heading, Input, SimpleGrid, Switch, Table, TableContainer, Tbody, Td, Text, Thead, Tr, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, SimpleGrid, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import BarChar from '../charts/Bar'
 import LineChart from '../charts/Charts'
-import DoughnutCahrt from '../charts/Doughnut'
 import { nodeData, sensor } from '../dash/addModel/AddNode'
 import EditNameActiv from './EditNameActive'
 
 function NodeEdit() {
-  const [nData, setnDate] = useState<nodeData>({ node_id:'',node_name: 'cdcdcdc', active: 'true', sensors: [] })
+  const [nData, setnDate] = useState<nodeData>({ node_id:'',node_name: '', active: 'true', sensors: [] })
   const [Sensors, setSensors] = useState<Array<sensor>>([{sensors_name:'',sensors_target_value:'',type:'',end_r:'',start_r:''}])
   const routeParams = useParams();
 
@@ -46,15 +45,26 @@ function NodeEdit() {
         {/* <Box><DoughnutCahrt /></Box> */}
         <Center h={'450px'}><BarChar /></Center>
       </SimpleGrid>
-      <Heading mt={'40px'}>{nData.node_id}</Heading>
-      <Text>{nData.active}</Text>
-      <Text>{nData.node_name}</Text>
+      <Flex py={'15px'} px={'20px'} bg={'whiteAlpha.400'} mt={'100px'}> 
+      <Box>
+      <Flex mt={'40px'}>
+      <Text fontWeight={'extrabold'}>Node Id: {nData.node_id}</Text>
+      <Text fontWeight={'thin'} ml={'10px'}>the node id will be you reference to the Node</Text>
+      </Flex>
+      {/* <Text>{nData.active}</Text> */}
+      <Flex>
+      <Text mt={'20px'} fontWeight={'extrabold'}> node name : {nData.node_name}</Text>
+      <Text fontWeight={'thin'} mt={'20px'} ml={'10px'}>the Node Name is just a away to help you to memorize insted of useing the address</Text>
+      </Flex>
+      </Box>
+      
+      </Flex>
       <Center m={5} p={5} bg={'greay'} borderRadius={'5px'}>
       
         <EditNameActiv setnDate={setnDate} nData={nData}/>
-       
+       <Button p={'25px'} colorScheme={'yellow'}>Edit Node</Button>
       </Center>
-      <Button p={'25px'} colorScheme={'yellow'}>Edit Node</Button>
+      
 
       <Center pt={'20px'} w={'100%'} >
       

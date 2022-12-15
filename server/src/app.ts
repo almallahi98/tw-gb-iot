@@ -1,4 +1,4 @@
-import exprees from 'express'
+import exprees, { Request, Response } from 'express'
 import { connectionBD } from './context/context.db';
 import nodesRouter from './route/nodes.router';
 import sensorsRouter from './route/sensors.router';
@@ -13,8 +13,7 @@ app.use(cros());
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/nodes',nodesRouter);
 app.use('/api/v1/sensors',sensorsRouter);
-app.use('/api/v1/nodeinput',nodeData)
-
+app.use('/api/v1/nodeinput',nodeData);
 
 app.listen(port,()=>{
     console.log('server is running on port: '+port);

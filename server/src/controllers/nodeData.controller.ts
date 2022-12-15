@@ -6,12 +6,18 @@ import { dataSchemaTypeBody, dataSchemaTypeParams } from "../schema/data.schema"
  export const inputData=async(req:Request,res:Response)=>{
     try{
         const id=req.params.nodeid
-    const data=req.body as data_input
-    const insertToData= await dbcontext.data_input.create({data:{
-        input_value:data.input_value,
-        sensor_id:data.sensor_id,
-        node_id:id,
-    }})
+        const data:data_input[]=req.body
+        const x=data.map(elm=>{
+            const x={sensor_id:elm.sensor_id,input_value:elm.input_value,node_id:id}
+            return x
+        })
+        console.log(x);
+        const insertToData= await dbcontext.data_input.createMany({data:x});
+    // const insertToData= await dbcontext.data_input.create({data:{
+    //     input_value:data.input_value,
+    //     sensor_id:data.sensor_id,
+    //     node_id:id,
+    // }})
     if(!insertToData){
         return res.status(400).json({
             message:'cannot add data ..'
