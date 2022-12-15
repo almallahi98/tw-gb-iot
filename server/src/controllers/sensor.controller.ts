@@ -47,11 +47,11 @@ export const deleteNodeSensor=async(req:Request,res:Response)=>{
     const id=req.params.id;
     try{
         const {count}=await dbcontext.data_input.deleteMany({where:{sensor_id:id}})
-        if(count <= 0){
+        if(count >1){
             return res.status(400).json({message:""})
         }else{
             const {count} =await dbcontext.nodes_sensors.deleteMany({where:{sensors_id:id}});
-            if(count <=0){
+            if(count < 1){
                 return res.status(400).json({message:"cant delete.. "})
             }
         }

@@ -7,7 +7,7 @@ const sensorsRouter=expess.Router();
 sensorsRouter.get('/getseneors/:id',portact,getAllNodeSenor);
 sensorsRouter.post('/addnewsensor',addNodeSensor);
 sensorsRouter.put('/updatesensor/:id',updateNodeSensor);
-sensorsRouter.delete('/deletesenosr/:id',deleteNodeSensor);
+sensorsRouter.delete('/deletesenosr/:id',portact,deleteNodeSensor);
 sensorsRouter.get('/getsensorstype',getsensorType);
 
 export default sensorsRouter;

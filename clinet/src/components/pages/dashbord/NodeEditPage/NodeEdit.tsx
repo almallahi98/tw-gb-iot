@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, SimpleGrid, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, SimpleGrid, Table, TableContainer, Tbody, Td, Text, Thead, Tr, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -7,10 +7,29 @@ import LineChart from '../charts/Charts'
 import { nodeData, sensor } from '../dash/addModel/AddNode'
 import EditNameActiv from './EditNameActive'
 
+
+
 function NodeEdit() {
   const [nData, setnDate] = useState<nodeData>({ node_id:'',node_name: '', active: 'true', sensors: [] })
   const [Sensors, setSensors] = useState<Array<sensor>>([{sensors_name:'',sensors_target_value:'',type:'',end_r:'',start_r:''}])
+  const toast=useToast();
   const routeParams = useParams();
+
+  const deleteSeneor=async(d:any)=>{
+    await axios.delete(`http://localhost:5000/api/v1/sensors/deletesenosr/${d}`,{headers:{
+      'Authorization': 'Bearer '+localStorage.getItem('token')
+    }}).then(res=>{
+      if(res.status ==200){
+          toast({
+            duration:3000,
+            colorScheme:'green',
+            description:res.data.message,
+            position:'bottom'
+          })
+          getNode()
+      }
+    })
+  }
 
   const getNode=async()=>{
     await axios.get('http://localhost:5000/api/v1/nodes/getnode/'+routeParams.id,{headers:{
@@ -61,8 +80,13 @@ function NodeEdit() {
       </Flex>
       <Center m={5} p={5} bg={'greay'} borderRadius={'5px'}>
       
-        <EditNameActiv setnDate={setnDate} nData={nData}/>
-       <Button p={'25px'} colorScheme={'yellow'}>Edit Node</Button>
+        <EditNameActiv setnDate={setnDate} nData={nData} />
+       <Button p={'25px'} colorScheme={'yellow'} onClick={()=>{
+
+       }}>Edit Node</Button>
+       <Button ml={'5px'} p={'25px'} colorScheme={'red'} onClick={()=>{
+
+       }}>Delete</Button>
       </Center>
       
 
@@ -79,6 +103,7 @@ function NodeEdit() {
                             <Td>Node Name</Td>
                             <Td>Active</Td>
                             <Td>Sensor address</Td>
+                            <Td>Delete Sensor</Td>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -92,6 +117,9 @@ function NodeEdit() {
                           <Td>{elm.end_r}</Td>
                           <Td>{elm.type}</Td>
                           <Td>{elm.sensors_id}</Td>
+                          <Td><Button colorScheme={'red'} attr-data={elm.sensors_id} onClick={(e)=>{
+                               deleteSeneor(e.currentTarget.getAttribute('attr-data'))
+                          }}>Delete</Button></Td>
                         </Tr>
                           )
                         })}
