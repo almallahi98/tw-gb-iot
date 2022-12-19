@@ -1,4 +1,5 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
+import { send } from "process";
 import { dbcontext } from "../context/context.db";
 import { sensorNodeSchemaType } from "../schema/node.sensores.schema"
 
@@ -65,18 +66,44 @@ export const deleteNodeSensor=async(req:Request,res:Response)=>{
 }
 
 
-export const getsensorType=async(req:Request,res:Response)=>{
-    // try{
-    //     const types=await dbcontext.sensors_type.findMany();
-    //     if(!types){
-    //         return res.status(400).json({message:'no sensores is added '})
-    //     }
-    //     return res.status(200).json(types)
-    // }
-    // catch(err){
-    //     console.log(err);
-    //     res.status(500).json({message:'server error'});
-    //     process.exit(1);
+export const deleteNode=async(req:Request,res:Response)=>{
+    try{
+        const id=res.locals.id;
+        const x=await dbcontext.nodes.deleteMany({where:{node_id:id}})
+            if(!x){
+                return res.status(400).json({message:'no node was deleted.. '});
+            }
+            return res.status(200).json({message:'node is deleted..'})
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message:'server error'});
+        process.exit(1);
         
-    // }
+    }
+}
+export const deleteAllSensorData=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const id=req.params.id ;
+        res.locals.id;
+        const x=await dbcontext.data_input.deleteMany({where:{node_id:id}})
+        next()
+    }
+    catch(err){
+        return res.status(500).json({message:'server error'});
+    }
+
+}
+
+export const deleteAllSensor=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const id=res.locals.id;
+        
+        const x=await dbcontext.nodes_sensors.deleteMany({where:{node_id:id}});
+        next()
+    }
+    catch(err){
+        return res.status(500).json({message:'server error'});
+    }
+
 }

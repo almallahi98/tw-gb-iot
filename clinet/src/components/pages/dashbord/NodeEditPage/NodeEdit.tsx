@@ -41,6 +41,22 @@ function NodeEdit() {
       })
   }
 
+  const deletNode=async(id:any)=>{
+    await axios.delete(`http://localhost:5000/api/v1/sensors/deletnode/${id}`,{headers:{
+      'Authorization': 'Bearer '+localStorage.getItem('token')
+    }}).then(res=>{
+      if(res.status==200){
+        toast({
+          duration:3000,
+          colorScheme:'green',
+          description:res.data.message,
+          position:'bottom'
+        })
+        
+      }
+    });
+  }
+
   const getSensors=async()=>{
     await axios.get('http://localhost:5000/api/v1/sensors/getseneors/'+routeParams.id,{headers:{
       'Authorization': 'Bearer '+localStorage.getItem('token')
@@ -84,8 +100,11 @@ function NodeEdit() {
        <Button p={'25px'} colorScheme={'yellow'} onClick={()=>{
 
        }}>Edit Node</Button>
-       <Button ml={'5px'} p={'25px'} colorScheme={'red'} onClick={()=>{
-
+       <Button ml={'5px'} p={'25px'} colorScheme={'red'} attr-data={nData.node_id} onClick={(e)=>{
+          // delete node
+          deletNode(e.currentTarget.getAttribute('attr-data'))
+          //console.log(e.currentTarget.getAttribute('attr-data'));
+          
        }}>Delete</Button>
       </Center>
       
@@ -98,11 +117,11 @@ function NodeEdit() {
                         <Tr>
                             <Td>#</Td>
                             <Td>Node Name</Td>
-                            <Td>Active</Td>
-                            <Td>Edit</Td>
-                            <Td>Node Name</Td>
-                            <Td>Active</Td>
-                            <Td>Sensor address</Td>
+                            <Td>target value</Td>
+                            <Td>sensor start range</Td>
+                            <Td>sensor end range</Td>
+                            <Td>sensor type</Td>
+                            <Td>Sensor id</Td>
                             <Td>Delete Sensor</Td>
                         </Tr>
                     </Thead>
@@ -120,8 +139,7 @@ function NodeEdit() {
                           <Td><Button colorScheme={'red'} attr-data={elm.sensors_id} onClick={(e)=>{
                                deleteSeneor(e.currentTarget.getAttribute('attr-data'))
                           }}>Delete</Button></Td>
-                        </Tr>
-                          )
+                        </Tr>)
                         })}
                       </Tbody>
                        </Table>

@@ -62,9 +62,9 @@ function DashBord() {
           borderColor={"white"}
           borderRadius={"5px"}
         >
-          <Table size="sm">
-            <Thead>
-              <Tr>
+          <Table size="lg">
+            <Thead bg={'gray.700'}>
+              <Tr my={5}>
                 <Td>#</Td>
                 <Td>Node Name</Td>
                 <Td>Active</Td>

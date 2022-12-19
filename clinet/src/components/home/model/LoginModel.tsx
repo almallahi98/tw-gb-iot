@@ -5,6 +5,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import React, {  useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
 
@@ -20,6 +21,7 @@ function LoginModel(props:any) {
     const isLogedin=()=>{
         if(localStorage.getItem('token')==null){
             setLoginStat('Login')
+            
         }else{
             setLoginStat('Logout') 
         }

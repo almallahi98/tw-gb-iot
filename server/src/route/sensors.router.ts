@@ -1,5 +1,5 @@
 import expess from 'express';
-import { addNodeSensor, deleteNodeSensor, getAllNodeSenor, getsensorType, updateNodeSensor } from '../controllers/sensor.controller';
+import { addNodeSensor, deleteAllSensorData, deleteNode, deleteNodeSensor, getAllNodeSenor,updateNodeSensor } from '../controllers/sensor.controller';
 import { portact } from '../middelware/auth/auth';
 
 const sensorsRouter=expess.Router();
@@ -8,6 +8,8 @@ sensorsRouter.get('/getseneors/:id',portact,getAllNodeSenor);
 sensorsRouter.post('/addnewsensor',addNodeSensor);
 sensorsRouter.put('/updatesensor/:id',updateNodeSensor);
 sensorsRouter.delete('/deletesenosr/:id',portact,deleteNodeSensor);
-sensorsRouter.get('/getsensorstype',getsensorType);
+//remove this to node controller!!! 
+sensorsRouter.delete('/deletnode/:id',portact,deleteAllSensorData,deleteNode);
+
 
 export default sensorsRouter;

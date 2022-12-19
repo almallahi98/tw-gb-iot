@@ -22,7 +22,7 @@ import { dataSchemaTypeBody, dataSchemaTypeParams } from "../schema/data.schema"
         return res.status(400).json({
             message:'cannot add data ..'
         })
-    }
+    } 
     res.status(201).json({
         message:'sensor data is added..'
     })

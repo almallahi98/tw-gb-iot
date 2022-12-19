@@ -38,7 +38,7 @@ void setup()
   pinMode(fan_relay, OUTPUT);
   pinMode(light, OUTPUT);
   WiFi.mode(WIFI_STA);
-  WiFi.begin("Almasa 4", "100200300");
+  WiFi.begin("almallahi_ext5G", "Mohammed@987");
   Serial.println("Connecting");
 
   soil_comp = 90;
