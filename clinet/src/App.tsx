@@ -11,8 +11,9 @@ import NodeEdit from "./components/pages/dashbord/NodeEditPage/NodeEdit"
 
 export const App = () => (
   <ChakraProvider>
-    <Nav />
+    
     <BrowserRouter>
+    <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs/>}/>

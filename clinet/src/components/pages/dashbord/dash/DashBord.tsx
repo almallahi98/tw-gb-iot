@@ -49,7 +49,7 @@ function DashBord() {
   }, []);
 
   return (
-    <SimpleGrid pt={"10vh"} columns={[1]} w={"100vw"}>
+    <SimpleGrid pt={["15vh","15vh"]} columns={[1]} w={"100vw"}>
       <Center px={"25%"}></Center>
       <Flex justifyContent={"end"} w={"90%"}>
         <AddNode />

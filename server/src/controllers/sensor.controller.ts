@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { send } from "process";
+import { array } from "zod";
 import { dbcontext } from "../context/context.db";
 import { sensorNodeSchemaType } from "../schema/node.sensores.schema"
 
@@ -68,9 +69,12 @@ export const deleteNodeSensor=async(req:Request,res:Response)=>{
 
 export const deleteNode=async(req:Request,res:Response)=>{
     try{
-        const id=res.locals.id;
-        const x=await dbcontext.nodes.deleteMany({where:{node_id:id}})
-            if(!x){
+        const id=res.locals.id
+        const x:any=await dbcontext.$queryRaw`DELETE FROM iot_enterprise.nodes WHERE node_id =  ${id}`
+        console.log(x);
+        
+        //.nodes.deleteMany({where:{node_id:id}})
+            if(x.length <0){
                 return res.status(400).json({message:'no node was deleted.. '});
             }
             return res.status(200).json({message:'node is deleted..'})
@@ -85,8 +89,13 @@ export const deleteNode=async(req:Request,res:Response)=>{
 export const deleteAllSensorData=async(req:Request,res:Response,next:NextFunction)=>{
     try{
         const id=req.params.id ;
-        res.locals.id;
-        const x=await dbcontext.data_input.deleteMany({where:{node_id:id}})
+        res.locals.id=id;
+        const {count}=await dbcontext.data_input.deleteMany({where:{node_id:id}})
+        console.log(count);
+        
+        if(count=== 0){
+            //res.status(400).json({message:'sensor data is empty..'})
+        }
         next()
     }
     catch(err){
@@ -98,8 +107,11 @@ export const deleteAllSensorData=async(req:Request,res:Response,next:NextFunctio
 export const deleteAllSensor=async(req:Request,res:Response,next:NextFunction)=>{
     try{
         const id=res.locals.id;
-        
-        const x=await dbcontext.nodes_sensors.deleteMany({where:{node_id:id}});
+        const {count}=await dbcontext.nodes_sensors.deleteMany({where:{node_id:id}});
+        if(count===0){
+           console.log('delete all sensores method: '+count);
+           
+        }
         next()
     }
     catch(err){

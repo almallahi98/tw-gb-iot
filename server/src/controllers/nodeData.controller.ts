@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { dbcontext } from "../context/context.db";
 import { dataSchemaTypeBody, dataSchemaTypeParams } from "../schema/data.schema";
 
- export const inputData=async(req:Request,res:Response)=>{
+export const inputData=async(req:Request,res:Response)=>{
     try{
         const id=req.params.nodeid
         const data:data_input[]=req.body

@@ -12,7 +12,6 @@ import {
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   useColorMode,
   Image,
@@ -25,10 +24,16 @@ import {
   SunIcon,
 } from '@chakra-ui/icons';
 import LoginModel from '../home/model/LoginModel';
+import { BiHome } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function WithSubnavigation() {
+  const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  
   return (
     <Box position={'absolute'} top={'0'} right={'0'} left={'0'} zIndex='1'>
       <Flex
@@ -55,7 +60,7 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-        <Image src='res/iot.png' w={'4vw'} h={'7vh'}/>
+        <Image src='res/iot.png' w={'30px'} h={'30px'}/>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -78,7 +83,15 @@ export default function WithSubnavigation() {
           <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
+              
+              <Button onClick={e=>{
+                navigate('/dash',{ replace: true });
+              }}>
+              <BiHome/>
+              </Button>
+              {/* dashbord button */}
               <LoginModel/>
+              
         </Stack>
       </Flex>
 

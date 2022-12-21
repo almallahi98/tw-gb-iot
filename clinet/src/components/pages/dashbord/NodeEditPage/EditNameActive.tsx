@@ -24,8 +24,7 @@ function EditNameActiv(props:any) {
               able and disabled
             </FormLabel>
             {(props.nData.active === "true") ? <Switch id='email-alerts' size={'lg'} colorScheme={'green'} isChecked onChange={e=>{
-                  
-                  props.setnDate({ ...props.nData, active:'true'})
+                  props.setnDate({ ...props.nData, active:'true'});
                   console.log(props.nDate);
             }}/>
              : <Switch id='email-alerts' size={'lg'} colorScheme={'green'} />}
